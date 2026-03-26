@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include <string>
 #include "Inventory.h"
 #include "Item.h"
@@ -10,30 +12,28 @@ private:
     int maxHealth;
     int attackPower;
     Inventory inventory;
-    int x;  // column
-    int y;  // row
+    int x; // horizontal position (column)
+    int y; // vertical position (row)
 
 public:
-    // Constructors / Destructor
-    Player();
-    Player(std::string name, int health, int attackPower);
-    ~Player();
+    // Constructors
+    Player(); // default
+    Player(std::string n, int h, int ap);
 
-    // Player actions
-    void takeDamage(int damage);
-    void displayStatus() const;
-    void showInventory() const;
-    void addItem(const Item& item);
+    // Position getters and setters
+    int getX() const;
+    int getY() const;
+    void setX(int newX);
+    void setY(int newY);
 
-    // Getters
+    // Stats getters
     std::string getName() const;
     int getHealth() const;
     int getMaxHealth() const;
     int getAttackPower() const;
 
-    // Position getters/setters
-    int getX() const;
-    int getY() const;
-    void setX(int x);
-    void setY(int y);
+    // Inventory
+    void addItem(const Item& item);
 };
+
+#endif

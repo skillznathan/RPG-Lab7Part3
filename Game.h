@@ -1,19 +1,22 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
+
 #include "Player.h"
 #include "Map.h"
 #include "Item.h"
 
 class Game {
 private:
-    Player player;  // Must be before gameMap
-    Map gameMap;
+    Player player;    // must come first
+    Map gameMap;      // depends on player
     bool running;
 
     void processInput();
 
 public:
     Game();
-    ~Game();
+    ~Game() {}
     void run();
-    const Player& getPlayer() const;
 };
+
+#endif

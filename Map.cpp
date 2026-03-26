@@ -1,29 +1,28 @@
 #include "Map.h"
-#include <iostream>
 
-Map::Map(int w, int h, Player* player)
-    : width(w), height(h), playerPtr(player)
+Map::Map(int w, int h, Player* p)
+    : width(w), height(h), playerPtr(p)
 {
-    // Set starting position inside the top-left wall
+    // Set player starting position
     playerPtr->setX(1);
     playerPtr->setY(1);
 
-    // Allocate rows
+    // Allocate grid
     grid = new char*[height];
-    for (int r = 0; r < height; r++) {
-        grid[r] = new char[width];
-        for (int c = 0; c < width; c++) {
-            if (r == 0 || r == height-1 || c == 0 || c == width-1)
-                grid[r][c] = '#';  // wall
+    for (int i = 0; i < height; i++) {
+        grid[i] = new char[width];
+        for (int j = 0; j < width; j++) {
+            if (i == 0 || i == height-1 || j == 0 || j == width-1)
+                grid[i][j] = '#';
             else
-                grid[r][c] = '.';  // floor
+                grid[i][j] = '.';
         }
     }
 }
 
 Map::~Map() {
-    for (int r = 0; r < height; r++)
-        delete[] grid[r];
+    for (int i = 0; i < height; i++)
+        delete[] grid[i];
     delete[] grid;
 }
 
@@ -35,7 +34,7 @@ void Map::draw() const {
             else
                 std::cout << grid[r][c];
         }
-        std::cout << std::endl;
+        std::cout << '\n';
     }
 }
 
@@ -44,6 +43,3 @@ bool Map::isWall(int x, int y) const {
         return true;
     return grid[y][x] == '#';
 }
-
-int Map::getWidth() const { return width; }
-int Map::getHeight() const { return height; }
