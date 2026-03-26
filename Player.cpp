@@ -1,26 +1,38 @@
 #include "Player.h"
 #include <iostream>
-using namespace std;
 
-// Updated constructor
-Player::Player(string name, int health)
-    : name(name), health(health), inventory(5) // capacity = 5 (or 10 if you want)
-{
-    cout << "Default constructor called for Player." << endl;
+Player::Player() : name("Hero"), health(100), maxHealth(100), attackPower(10), x(0), y(0) {}
+
+Player::Player(std::string n, int h, int ap)
+    : name(n), health(h), maxHealth(h), attackPower(ap), x(0), y(0) {}
+
+Player::~Player() {}
+
+void Player::takeDamage(int damage) {
+    health -= damage;
+    if (health < 0) health = 0;
 }
 
-// Show inventory
+void Player::displayStatus() const {
+    std::cout << name << " HP: " << health << "/" << maxHealth << std::endl;
+}
+
 void Player::showInventory() const {
-    cout << "\n--- " << name << "'s Inventory ---" << endl;
     inventory.display();
 }
 
-// Add item
 void Player::addItem(const Item& item) {
-    if (inventory.addItem(item)) {
-        cout << name << " found a ";
-        item.display();
-    } else {
-        cout << "Inventory is full! Could not add " << item.getName() << endl;
-    }
+    inventory.add(item);
 }
+
+// Getters
+std::string Player::getName() const { return name; }
+int Player::getHealth() const { return health; }
+int Player::getMaxHealth() const { return maxHealth; }
+int Player::getAttackPower() const { return attackPower; }
+
+// Position
+int Player::getX() const { return x; }
+int Player::getY() const { return y; }
+void Player::setX(int newX) { x = newX; }
+void Player::setY(int newY) { y = newY; }
